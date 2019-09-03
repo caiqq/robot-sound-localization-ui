@@ -1,0 +1,21 @@
+.LocalizationPanel{
+    background-color: rgba(240, 229, 229,1);
+    margin: 4px;
+    padding: 4px;
+    height: 1000px;
+}
+
+.localizationBtn {
+    height: 30px;
+    width: 90px;
+}
+
+.uploadInput {
+    display: inline;
+}
+
+.timeText {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
