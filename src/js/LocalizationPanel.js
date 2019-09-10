@@ -21,7 +21,7 @@ class LocalizationPanel extends Component {
 
     onResize = () => {
       this.setState({
-        screenWidth: window.innerWidth*0.56,
+        screenWidth: window.innerWidth*0.82,
         screenHeight: window.innerHeight*0.82,
       })
     }
@@ -59,13 +59,6 @@ class LocalizationPanel extends Component {
           })
           store.dispatch({
             type: configure.action.evalution,
-            conv1: text.conv1,
-            conv1_1: text.conv1_1,
-            conv2: text.conv2,
-            conv2_1: text.conv2_1,
-            conv3: text.conv3,
-            conv3_1: text.conv3_1,
-            conv4: text.conv4,
             out_prob: text.outProb,
             max_out: text.maxOut,
             max_out_list: text.max_out_list,
@@ -101,32 +94,6 @@ class LocalizationPanel extends Component {
       })
     }
 
-    subTimesState = () => {
-      if(this.state.times > 1){
-          store.dispatch({
-              type: configure.action.time,
-              time: this.state.times - 1
-          })
-      }
-    }
-
-    addTimesState = () => {
-        if(this.state.times < 10){
-            store.dispatch({
-                type: configure.action.time,
-                time: this.state.times + 1
-            })
-        }
-    }
-
-    onSubBtn = (e) => {
-      this.subTimesState()
-    }
-    
-    onAddBtn = (e) => {
-      this.addTimesState()
-    }
-
     render(){
       console.log("localization render!")
     
@@ -134,28 +101,8 @@ class LocalizationPanel extends Component {
       let audio_files = stateAll.audioFiles
       console.log("audio_files: ")
       console.log(audio_files)
-      const ButtonGroup = Button.Group;
-      var newTime = "Time: " + this.state.times
       return(
           <div className="LocalizationPanel">
-            <Row>
-                <Col span={3}>
-                    <ButtonGroup>
-                        <Button onClick={this.onSubBtn}>
-                            <Icon type="left" />
-                        </Button>
-                        <Button onClick={this.onAddBtn}>
-                            <Icon type="right" />
-                        </Button>
-                    </ButtonGroup>
-                </Col>
-                <Col span={5} className="timeText">{newTime}</Col>
-                <Col span={3} >
-                  {/* <audio controls={true} style={{display: "none"}}>
-                    <source src={"foo.wav"} type={"audio/wav"}/>
-                  </audio> */}
-                </Col>
-            </Row>
             <LocationChart
               screenWidth={this.state.screenWidth}
               screenHeight={this.state.screenHeight}

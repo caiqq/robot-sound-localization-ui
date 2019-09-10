@@ -3,6 +3,8 @@ import '../stypes/MainWindow.css'
 import NewHeader from './Header';
 import MainBody from './MainBody'
 import configuration from '../config.json'
+import {fetchEvalutionProject} from '../utils/fetchs'
+import store from '../store/configStore'
 
 class MainWindow extends Component {
     constructor(props){
@@ -12,14 +14,59 @@ class MainWindow extends Component {
         }
     }
 
+    tick() {
+        fetchEvalutionProject((text) => {
+            try{
+                console.log(text)
+                let textChange = text.changeFlag
+                if(textChange === true){
+                    console.log("update convs: ")
+                    store.dispatch({
+                        type: configuration.action.evalution,
+                        conv1: text.conv1,
+                        conv2: text.conv2,
+                        conv3: text.conv3,
+                        conv4: text.conv4,
+                        changeFlag: textChange
+                    })
+                }else{
+                    store.dispatch({
+                        type: configuration.action.evalution,
+                        changeFlag: textChange
+                    })
+                }
+                      
+            }catch(error){
+              console.log("load project JSON parse error")
+              console.log(error)
+            }
+        })      
+    }
+
+    componentDidMount() {
+        this.interval = setInterval(() => this.tick(), 6000);
+    }
+
+    shouldComponentUpdate(nextProps){
+        if(nextProps.changeFlag === false){
+          return false
+        }else{
+          return true
+        }
+        
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+      
     render(){
         const statesAll = this.props.stateAll.project;
-        const stateTime = this.props.stateAll.time;
         console.log("mainwindow render!")
         return(
             <div id="MainWindow">
                 <NewHeader title={configuration.titleName}></NewHeader>
-                <MainBody stateAll={statesAll} stateTime={stateTime}></MainBody>
+                <MainBody stateAll={statesAll}></MainBody>
             </div>
         )
     }

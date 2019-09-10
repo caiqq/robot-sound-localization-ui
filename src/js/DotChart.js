@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
     Chart,
     Geom,
-    Tooltip
+    Tooltip,
+    Axis
   } from "bizcharts"
 
 class DotChart extends Component{
@@ -10,14 +11,12 @@ class DotChart extends Component{
         super(props)
         this.state = {
             dot_data: [],
-            times: props.times,
             title: "",
         }
     }
     componentWillReceiveProps(nextProps){
         this.setState({
             dot_data: this.createDatas(nextProps),
-            times: nextProps.times,
             title: nextProps.title,
         })
     }
@@ -26,9 +25,9 @@ class DotChart extends Component{
         var datas = []
         var datasAll = props.conv
         if(datasAll.length > 0){
-            for(var row=0; row < datasAll[props.times-1].length; row++){
-                for(var col=0; col < datasAll[props.times-1][row].length; col++){
-                    if(datasAll[props.times-1][row][col] === 1){
+            for(var row=0; row < datasAll.length; row++){
+                for(var col=0; col < datasAll[row].length; col++){
+                    if(datasAll[row][col] === 1){
                         datas.push({"time": col, "neuron": row})
                     }
                 }
@@ -37,6 +36,7 @@ class DotChart extends Component{
         
         return datas
     }
+
     render(){
         // var data = [{"height": 10, "weight": 10}, {"height": 5, "weight": 10}, {"height": 3, "weight": 3}]
         var data = this.state.dot_data
@@ -45,14 +45,29 @@ class DotChart extends Component{
         if(this.props.conv.length > 0){
             title = this.state.title
             var z = this.props.conv[0].length
-            var y = this.props.conv[0][0].length
-            var x = this.props.conv[0][0][0].length
+            var y = this.props.conv.length
             title = title + " " + "shape(" + z + ", " + y +")"
         }
         
         return(
             <div>
-                <Chart height={window.innerHeight / 5} data={data} padding={{ top: 20, right: 10, bottom: 20, left: 30 }} forceFit>
+                <Chart height={window.innerHeight / 4.5} data={data} padding={{ top: 20, right: 10, bottom: 20, left: 30 }} forceFit>
+                    <Axis
+                        name="neuron numbers"
+                        title={"neuron numbers"}
+                        tickLine={null}
+                        line={{
+                        stroke: "#E6E6E6"
+                        }}
+                    />
+                    <Axis
+                        name="time"
+                        title={"time"}
+                        tickLine={null}
+                        line={{
+                        stroke: "#E6E6E6"
+                        }}
+                    />
                     <Tooltip
                         showTitle={false}
                         crosshairs={{

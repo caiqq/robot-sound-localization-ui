@@ -26,8 +26,8 @@ class LineChart extends Component{
         var datas = []
         var datasAll = props.out_prob_list
         if(datasAll.length > 0){
-            for(var row=0; row < datasAll[props.times-1].length; row++){                
-                datas.push({"angle": row, "prop": datasAll[props.times-1][row]}) 
+            for(var row=0; row < datasAll.length; row++){                
+                datas.push({"angle": row, "prop": datasAll[row]}) 
             }
         }        
         return datas

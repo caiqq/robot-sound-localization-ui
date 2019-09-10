@@ -230,7 +230,7 @@ class LocationChart extends Component {
         var xIndex_location = radius*Math.cos(angle*Math.PI/180)
         var yIndex_location = radius*Math.sin(angle*Math.PI/180)
 
-        if(props.stateAll.conv1.length<1){
+        if(props.stateAll.max_out_list.length<1){
             svg.append("path")
             .datum([])
             .attr("class", "line")

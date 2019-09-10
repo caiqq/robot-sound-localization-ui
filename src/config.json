@@ -1,6 +1,5 @@
 {
     "action": {
-        "upload": "upload",
         "evalution": "evalution",
         "time": "time"
     },

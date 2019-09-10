@@ -19,16 +19,8 @@ const options = {
  * @param {*} file_name 
  * @param {*} cb 
  */
-export function fetchEvalutionProject(file_name, cb){
-  const newURL = "/sound/" + file_name
-  options.method = 'POST'
-  return fetch(newURL, options)
-  .then(response => response.json())
-  .then(cb)
-}
-
-export function fetchUploadProject(file_name, cb){
-  const newURL = "/location/" + file_name
+export function fetchEvalutionProject(cb){
+  const newURL = "/sound"
   options.method = 'POST'
   return fetch(newURL, options)
   .then(response => response.json())
