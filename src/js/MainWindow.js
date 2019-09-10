@@ -27,7 +27,9 @@ class MainWindow extends Component {
                         conv2: text.conv2,
                         conv3: text.conv3,
                         conv4: text.conv4,
-                        changeFlag: textChange
+                        changeFlag: textChange,
+                        location: text.location,
+                        locationBins: text.locationBins
                     })
                 }else{
                     store.dispatch({

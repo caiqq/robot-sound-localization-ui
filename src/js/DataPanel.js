@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import '../stypes/DataPanel.css';
 import DotChart from './DotChart';
-import LineChart from './LineChart';
+// import LineChart from './LineChart';
+import HistogramChart from './HistogramChart'
 import {Row, Col} from 'antd';
 
 class DataPanel extends Component {
@@ -45,7 +46,7 @@ class DataPanel extends Component {
         const conv1 = stateAll.conv1
         const conv2 = stateAll.conv2
         const conv3 = stateAll.conv3
-        const conv4 = stateAll.conv4
+        const conv4 = stateAll.locationBins
 
         var title1 = "Layer1"
         var title2 = "Layer2"
@@ -71,7 +72,7 @@ class DataPanel extends Component {
                 </Row>
                 <Row>
                     <Col>
-                        <LineChart out_prob_list={conv4} title={title4}></LineChart>
+                        <HistogramChart out_prob_list={conv4} title={title4}></HistogramChart>
                     </Col>                    
                 </Row>               
             </div>

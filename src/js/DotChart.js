@@ -28,7 +28,7 @@ class DotChart extends Component{
             for(var row=0; row < datasAll.length; row++){
                 for(var col=0; col < datasAll[row].length; col++){
                     if(datasAll[row][col] === 1){
-                        datas.push({"time": col, "neuron": row})
+                        datas.push({"neuron": col, "time": row})
                     }
                 }
             }
@@ -39,56 +39,70 @@ class DotChart extends Component{
 
     render(){
         // var data = [{"height": 10, "weight": 10}, {"height": 5, "weight": 10}, {"height": 3, "weight": 3}]
-        var data = this.state.dot_data
+        let data = this.state.dot_data
+        let title = ""
         console.log("dot chart render: ")
-        var title = ""
         if(this.props.conv.length > 0){
             title = this.state.title
-            var z = this.props.conv[0].length
-            var y = this.props.conv.length
+            let z = this.props.conv[0].length
+            let y = this.props.conv.length
             title = title + " " + "shape(" + z + ", " + y +")"
         }
         
+        const axixTitle = {
+            autoRotate: true,
+            offset: 15,
+            textStyle: {
+              fontSize: '12',
+              textAlign: 'center',
+              fill: '#000',
+              fontWeight: 'bold'
+            },
+            position: 'center',
+        }
         return(
             <div>
-                <Chart height={window.innerHeight / 4.5} data={data} padding={{ top: 20, right: 10, bottom: 20, left: 30 }} forceFit>
-                    <Axis
-                        name="neuron numbers"
-                        title={"neuron numbers"}
-                        tickLine={null}
-                        line={{
-                        stroke: "#E6E6E6"
-                        }}
-                    />
+                <Chart height={window.innerHeight / 4.3} data={data} padding={{ top: 20, right: 10, bottom: 20, left: 30 }} forceFit>
                     <Axis
                         name="time"
-                        title={"time"}
+                        visible={true}
+                        title={axixTitle}
                         tickLine={null}
                         line={{
-                        stroke: "#E6E6E6"
+                            stroke: "#E6E6E6"
                         }}
                     />
-                    <Tooltip
-                        showTitle={false}
-                        crosshairs={{
-                        type: "cross"
+                    <Axis
+                        name="neuron"
+                        visible={true}
+                        title={axixTitle}
+                        tickLine={null}
+                        line={{
+                            stroke: "#E6E6E6"
                         }}
-                        itemTpl="<li data-index={index} style=&quot;margin-bottom:4px;&quot;><span style=&quot;background-color:{color};&quot; class=&quot;g2-tooltip-marker&quot;></span>{name}<br/>{value}</li>"
+                    />
+                    
+                    <Tooltip
+                        // showTitle={false}
+                        // crosshairs={{
+                        // type: "cross"
+                        // }}
+                        // itemTpl="<li data-index={index} style=&quot;margin-bottom:4px;&quot;><span style=&quot;background-color:{color};&quot; class=&quot;g2-tooltip-marker&quot;></span>{name}<br/>{value}</li>"
                     />
                     {/* <Axis name="time" />
                     <Axis name="neuron" /> */}
                     <Geom
                         type="point"
-                        position="time*neuron"
+                        position="neuron*time"
                         opacity={0.65}
                         shape="circle"
                         size={2}
                         tooltip={[
-                        "gender*time*neuron",
+                        "gender*neuron*time",
                         (gender, time, neuron) => {
                             return {
                             name: gender,
-                            value: time +" "+ neuron
+                            value: neuron +" "+ time
                             };
                         }
                         ]}>                       
